@@ -10,9 +10,14 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
-      - name: Compile FFmpeg Engine
+      - name: Install Build Tools
+        run: sudo apt-get update && sudo apt-get install -y nasm yasm pkg-config
+
+      - name: Download Modern NDK and Compile Engine
         run: |
-          export ANDROID_SDK_HOME=$ANDROID_HOME
+          wget -q https://dl.google.com/android/repository/android-ndk-r27b-linux.zip
+          unzip -q android-ndk-r27b-linux.zip
+          export ANDROID_NDK_HOME=$(pwd)/android-ndk-r27b
           ./ffmpeg-android-maker.sh
           
       - name: Save and Upload Binaries
