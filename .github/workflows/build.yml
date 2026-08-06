@@ -1,0 +1,22 @@
+name: Build FFmpeg 16KB
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Compile FFmpeg Engine
+        run: |
+          export ANDROID_SDK_HOME=$ANDROID_HOME
+          ./ffmpeg-android-maker.sh
+          
+      - name: Save and Upload Binaries
+        uses: actions/upload-artifact@v4
+        with:
+          name: ffmpeg-16kb-binaries
+          path: output/
