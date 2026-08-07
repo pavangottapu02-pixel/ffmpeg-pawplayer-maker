@@ -19,6 +19,10 @@ jobs:
           unzip -q android-ndk-r27b-linux.zip
           export ANDROID_SDK_HOME=$ANDROID_HOME
           export ANDROID_NDK_HOME=$(pwd)/android-ndk-r27b
+          
+          # Injecting surgical pruning flags to strip video/network and keep the audiophile core
+          export EXTRA_BUILD_CONFIGURATION_FLAGS="--disable-everything --disable-programs --disable-doc --disable-network --disable-hwaccels --disable-encoders --disable-muxers --disable-filters --disable-devices --disable-postproc --disable-swscale --disable-avdevice --enable-avcodec --enable-avformat --enable-avutil --enable-swresample --enable-protocol=file --enable-demuxer=flac,mp3,wav,aac,mov,dsf,ape,ogg --enable-parser=flac,mpegaudio,aac --enable-decoder=flac,alac,mp3,aac,ape,vorbis --enable-decoder=pcm_s16le,pcm_s24le,pcm_s32le,pcm_f32le --enable-decoder=dsd_lsbf,dsd_msbf,dsd_lsbf_planar,dsd_msbf_planar"
+          
           ./ffmpeg-android-maker.sh
           
       - name: Save and Upload Binaries
